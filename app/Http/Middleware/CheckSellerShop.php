@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 
 use App\Helpers\ResponseError;
 use App\Models\User;
+use App\Services\ProjectService\ProjectService;
 use App\Traits\ApiResponse;
 use Closure;
 use Exception;
@@ -13,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class CheckSellerShop
 {
@@ -28,8 +30,13 @@ class CheckSellerShop
      */
     public function handle(Request $request, Closure $next): JsonResponse
     {
-        if (!Cache::get('rjkcvd.ewoidfh') || data_get(Cache::get('rjkcvd.ewoidfh'), 'active') != 1) {
-            abort(403);
+        (new ProjectService)->ensureLicenceCache();
+
+        if (!Cache::get('rjkcvd.ewoidfh') || !data_get(Cache::get('rjkcvd.ewoidfh'), 'active')) {
+            return $this->onErrorResponse([
+                'code' => ResponseError::ERROR_403,
+                'http' => HttpResponse::HTTP_FORBIDDEN,
+            ]);
         }
 
         if (!auth('sanctum')->check()) {

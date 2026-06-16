@@ -5,6 +5,7 @@ namespace App\Services\ProjectService;
 
 use App\Models\Shop;
 use App\Services\CoreService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class ProjectService extends CoreService
@@ -44,12 +45,43 @@ class ProjectService extends CoreService
 
     public function checkLocal(): bool
     {
-        if ($_SERVER[base64_decode('UkVNT1RFX0FERFI=')] == base64_decode('MTI3LjAuMC4x')
-            || $_SERVER[base64_decode('SFRUUF9IT1NU')] == base64_decode('bG9jYWxob3N0')
-            || str_starts_with($_SERVER[base64_decode('SFRUUF9IT1NU')], '10.')
-            || substr($_SERVER[base64_decode('SFRUUF9IT1NU')], 0, 7) == base64_decode('MTkyLjE2OA==')) {
+        if (app()->environment('local')) {
             return true;
         }
+
+        $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
+        $httpHost   = $_SERVER['HTTP_HOST'] ?? '';
+
+        if ($remoteAddr === '127.0.0.1'
+            || $httpHost === 'localhost'
+            || str_starts_with($httpHost, '127.0.0.1')
+            || str_starts_with($httpHost, '10.')
+            || str_starts_with($httpHost, '192.168.')) {
+            return true;
+        }
+
         return false;
+    }
+
+    public function ensureLicenceCache(): void
+    {
+        $cached = Cache::get('rjkcvd.ewoidfh');
+
+        if ($cached && data_get($cached, 'active')) {
+            return;
+        }
+
+        Cache::remember('rjkcvd.ewoidfh', 302400, function () {
+            $response = json_decode($this->activationKeyCheck());
+
+            if (
+                data_get($response, 'active') &&
+                data_get($response, 'key') == config('credential.purchase_code')
+            ) {
+                return json_decode(json_encode($response), true);
+            }
+
+            return null;
+        });
     }
 }
