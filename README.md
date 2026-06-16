@@ -1,6 +1,6 @@
-# qnis — Multivendor E-Commerce API (Backend)
+# anis — Multivendor E-Commerce API (Backend)
 
-Laravel 8 REST API for the **qnis** multivendor marketplace. It powers the customer web app, mobile apps, seller panel, admin panel, and delivery driver workflows from a single backend.
+Laravel 8 REST API for the **anis** multivendor marketplace. It powers the customer web app, mobile apps, seller panel, admin panel, and delivery driver workflows from a single backend.
 
 ---
 
@@ -66,7 +66,7 @@ php artisan key:generate
 Configure at minimum:
 
 ```env
-APP_NAME=qnis
+APP_NAME=anis
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://127.0.0.1:8000
@@ -74,7 +74,7 @@ APP_URL=http://127.0.0.1:8000
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=qnis
+DB_DATABASE=anis
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -83,11 +83,11 @@ FILESYSTEM_DISK=s3
 AWS_ACCESS_KEY_ID=your_key
 AWS_SECRET_ACCESS_KEY=your_secret
 AWS_DEFAULT_REGION=us-east-1
-AWS_BUCKET=qnis
-AWS_URL=http://127.0.0.1:9000/qnis
+AWS_BUCKET=anis
+AWS_URL=http://127.0.0.1:9000/anis
 AWS_ENDPOINT=http://127.0.0.1:9000
 AWS_USE_PATH_STYLE_ENDPOINT=true
-IMG_HOST=http://127.0.0.1:9000/qnis/
+IMG_HOST=http://127.0.0.1:9000/anis/
 
 # Frontend URLs (used in emails, redirects, CORS)
 FRONT_URL=http://localhost:3000/
@@ -97,7 +97,7 @@ ADMIN_URL=http://localhost:3001/
 ### 3. Create the database
 
 ```sql
-CREATE DATABASE qnis CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE anis CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 ### 4. Run migrations and seeders
@@ -248,7 +248,7 @@ php artisan db:seed --class=WebFrontendTranslationSeeder
 Product images, shop logos, and uploads are stored on S3-compatible storage.
 
 1. Start MinIO (or configure AWS S3 credentials in `.env`)
-2. Create a bucket named `qnis` (or match `AWS_BUCKET`)
+2. Create a bucket named `anis` (or match `AWS_BUCKET`)
 3. Make the bucket public for image URLs:
 
 ```bash
@@ -264,8 +264,8 @@ Set `IMG_HOST` in `.env` to your public bucket URL so image links resolve correc
 A `Dockerfile` is included for containerized development:
 
 ```bash
-docker build -t qnis-api .
-docker run -p 8000:8000 --env-file .env qnis-api
+docker build -t anis-api .
+docker run -p 8000:8000 --env-file .env anis-api
 ```
 
 The entrypoint runs `composer install`, migrations (if enabled), and `php artisan serve` on port **8000**.
@@ -382,7 +382,7 @@ php artisan test
 
 ## License
 
-This project is based on the **qnis** multivendor e-commerce marketplace (CodeCanyon). Use according to your purchase license terms.
+This project is based on the **anis** multivendor e-commerce marketplace (CodeCanyon). Use according to your purchase license terms.
 
 ---
 
