@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentSeeder::class);
         $this->call(SubscriptionSeeder::class);
         $this->call(TranslationSeeder::class);
+        $this->call(WebFrontendTranslationSeeder::class);
         $this->call(EmailSettingSeeder::class);
         $this->call(SmsGatewaySeeder::class);
         $this->call(UnitSeeder::class);

@@ -643,7 +643,7 @@ class FakeDataSeeder extends Seeder
                 ['name' => 'Japan',                'code' => 'jp', 'cities' => ['Tokyo', 'Osaka']],
             ],
             'Africa' => [
-                ['name' => 'Morocco',      'code' => 'ma', 'cities' => ['Casablanca', 'Rabat']],
+                ['name' => 'Algeria',      'code' => 'dz', 'cities' => ['Algiers', 'Oran']],
                 ['name' => 'Egypt',        'code' => 'eg', 'cities' => ['Cairo', 'Alexandria']],
                 ['name' => 'South Africa', 'code' => 'za', 'cities' => ['Johannesburg', 'Cape Town']],
                 ['name' => 'Nigeria',      'code' => 'ng', 'cities' => ['Lagos', 'Abuja']],

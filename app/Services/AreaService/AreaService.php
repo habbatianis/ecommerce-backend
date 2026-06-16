@@ -7,13 +7,14 @@ use App\Helpers\ResponseError;
 use App\Models\Area;
 use App\Models\City;
 use App\Services\CoreService;
+use App\Traits\EnsuresDeliveryPrice;
 use App\Traits\SetTranslations;
 use Exception;
 use Throwable;
 
 final class AreaService extends CoreService
 {
-    use SetTranslations;
+    use SetTranslations, EnsuresDeliveryPrice;
 
     protected function getModelClass(): string
     {
@@ -31,6 +32,8 @@ final class AreaService extends CoreService
             $model = $this->model()->create($data);
 
             $this->setTranslations($model, $data, false);
+
+            $this->ensureAreaDeliveryPrice($model);
 
             return ['status' => true, 'code' => ResponseError::NO_ERROR, 'data' => $model];
         } catch (Exception $e) {

@@ -6,13 +6,14 @@ namespace App\Services\CountryService;
 use App\Helpers\ResponseError;
 use App\Models\Country;
 use App\Services\CoreService;
+use App\Traits\EnsuresDeliveryPrice;
 use App\Traits\SetTranslations;
 use Exception;
 use Throwable;
 
 final class CountryService extends CoreService
 {
-    use SetTranslations;
+    use SetTranslations, EnsuresDeliveryPrice;
 
     protected function getModelClass(): string
     {
@@ -34,6 +35,8 @@ final class CountryService extends CoreService
                 ]);
 
             }
+
+            $this->ensureCountryDeliveryPrice($model);
 
             return ['status' => true, 'code' => ResponseError::NO_ERROR, 'data' => $model];
         } catch (Exception $e) {

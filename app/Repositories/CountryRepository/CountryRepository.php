@@ -48,7 +48,7 @@ class CountryRepository extends CoreRepository
                 },
                 fn($q) => $q->orderBy($column, $sort)
             )
-            ->paginate(data_get($filter, 'perPage', 10));
+            ->paginate(data_get($filter, 'perPage', data_get($filter, 'has_price') ? 100 : 10));
     }
 
     /**
